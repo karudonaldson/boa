@@ -17,6 +17,7 @@
   # How to replace Let's Encrypt certificate with custom certificate?
   # How to replace existing custom certificates with Let's Encrypt certificates?
   # How to use Let's Encrypt certificate on the old, dedicated IP address?
+  # Troubleshooting SSL certificate not renewing/registering correctly
 
 BOA-3.1.0 release opens a new era in SSL support for all hosted Drupal sites.
 The old method of creating SSL proxy vhosts is officially deprecated,
@@ -226,3 +227,12 @@ as explained in this document further below.
   dedicated IP addresses with Let's Encrypt certificates. You need to migrate
   to the built-in Let's Encrypt support mode, as explained in previous section
   above.
+
+* Troubleshooting SSL certificate not renewing/registering correctly on a hosted site
+
+  If a hosted site fails to register/renew a Letsencrypt SSL certificate correctly, 
+  and where verify log shows "SSL: error private key values mismatch", it is safe to delete the private 
+  key file stored in ~/tools/le/certs/SITENAME.TLD with file name "privkey-*****.pem"
+  symlinked to privkey.pem.  Once this file is deleted, simply disable SSL in the Aegir panel,
+  hit save, wait for verify task to complete, then re-enable SSL, and the letsencrypt dehydrated script
+  auto generates a new private key and registers/renews a new letsencrypt SSL certificate.
